@@ -1,0 +1,13 @@
+{
+  "name": "steadytrade-open",
+  "version": "1.0.0",
+  "description": "Open calculation code behind steadytrade.net charts: rule-based chart pattern detector and indicator engine.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://www.steadytrade.net",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "test": "node --test",
+    "patterns": "node examples/find-patterns.mjs"
+  }
+}
