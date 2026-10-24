@@ -1,7 +1,7 @@
 {
   "name": "steadytrade-open",
   "version": "1.0.0",
-  "description": "Open calculation code behind steadytrade.net charts: rule-based chart pattern detector and indicator engine.",
+  "description": "Open calculation code behind steadytrade.net: chart pattern detector, indicator engine and the strategy-lab backtest engine.",
   "type": "module",
   "license": "MIT",
   "homepage": "https://www.steadytrade.net",

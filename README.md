@@ -12,20 +12,25 @@
 
 | | |
 |---|---|
-| **Workspace** | Describe a strategy or a question ("buy BTC after three days of ETF outflows — did that work?"). An AI analyst calls data tools, backtests, and writes a report. |
+| **Ask the AI analyst** | Describe a strategy or a question ("buy BTC after three days of ETF outflows — did that work?"). An AI analyst calls data tools, backtests, and writes a report. |
+| **Strategy lab** | Build a trading rule by picking conditions, using a fixed method (scale-in, grid, periodic buying, staircase cycle), writing a short script, or just describing it. The backtest runs in your browser with the open engine in this repository. Save privately, share a result link, like other people's strategies. ([how it is calculated](docs/strategy-lab.md)) |
 | **Reports** | Each report lists what you asked as a checklist and marks every item *Checked*, *Partly* or *Not checked*. Conclusions carry a confidence level, and reports are frozen when created. |
-| **Markets** | Crypto (top coins, Korean exchange movers, kimchi premium, funding), whales (Hyperliquid top traders, Binance long/short, BTC ETF flows, corporate BTC holders), stocks & indices, rates, FX and commodities. |
+| **Markets** | Crypto (top coins with gainers/losers by exchange — Binance first, funding; the kimchi premium in the Korean view), whales (Hyperliquid top traders, Binance long/short, BTC ETF flows, corporate BTC holders), stocks & indices, rates, FX and commodities. |
 | **Flows & positioning** | CFTC futures positioning by trader type, US ETF money in/out, FINRA short-sale share, CBOE put/call, SEC Form 4 insider trades, quarterly 13F changes of well-known investors. |
 | **Charts** | Exchange and Yahoo candles, 20+ indicators, drawings, similar-pattern search, and rule-based chart pattern detection (triangles, wedges, double/triple tops & bottoms, head and shoulders). |
 | **Status** | A public page showing when each data source last arrived and whether every collector is healthy. |
 
-Available in English, Korean, Japanese and Simplified Chinese.
+Available in English, Korean, Japanese and Simplified Chinese — the site follows your browser language, or open any page with `?lang=en`, `?lang=ja`, `?lang=zh` or `?lang=ko` (for example [steadytrade.net/?lang=en](https://www.steadytrade.net/?lang=en)).
 
 ## Screenshots
 
 | Report with checklist | Chart patterns |
 |---|---|
 | ![Report](docs/img/report.png) | ![Chart patterns](docs/img/chart-patterns.png) |
+
+| Strategy lab (staircase cycle) | Chart |
+|---|---|
+| ![Strategy lab](docs/img/strategy-cycle.png) | ![Chart](docs/img/chart.png) |
 
 | Flows & positioning | Data source status |
 |---|---|
@@ -41,14 +46,16 @@ Available in English, Korean, Japanese and Simplified Chinese.
 
 ## Open code in this repository
 
-The full service is not open source, but the pure calculation code behind the charts is — so anyone can check how it works.
+The full service is not open source, but the pure calculation code behind the charts and the strategy lab is — so anyone can check how the numbers are made.
 
 | Path | What it is |
 |---|---|
 | [`src/patterns.js`](src/patterns.js) | Chart pattern detector used on the site. Rule-based and deterministic — no AI. ([how it works](docs/chart-patterns.md)) |
 | [`src/indicators.js`](src/indicators.js) | Indicator engine used by the chart: SMA, EMA, Bollinger, RSI, MACD, Parabolic SAR, Stochastic, ADX, Donchian, Supertrend, Keltner, VWAP, ATR, CCI, Williams %R, OBV, MFI, ROC and more. |
+| [`src/backtest/`](src/backtest) · [`src/schema/`](src/schema) | Backtest engine of the strategy lab: next-bar-open fills, fees and slippage, funding, longer-bar filters, the rule format and its validator, and the staircase cycle. ([how it works](docs/strategy-lab.md)) |
+| [`src/metrics.js`](src/metrics.js) · [`src/bt-stats.js`](src/bt-stats.js) | Drawdown, win-rate confidence interval, trade statistics shown under each result. |
 | [`examples/find-patterns.mjs`](examples/find-patterns.mjs) | Run the detector on live Binance candles. |
-| [`test/`](test) | Tests against a real BTC/USDT 4h sample. |
+| [`test/`](test) | Tests against a real BTC/USDT 4h sample — patterns, and the backtest engine (no look-ahead, cap never exceeded, deterministic). |
 
 ```bash
 # Node.js 18+
